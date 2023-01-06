@@ -1,0 +1,5 @@
+".\OUTPUT\STARTUP.obj",
+".\OUTPUT\main.obj",
+".\OUTPUT\led.obj" 
+TO ".\OUTPUT\snake51" 
+PRINT(".\LISITING\snake51.m51") RAMSIZE(256) 

@@ -1,0 +1,86 @@
+C51 COMPILER V9.50a   LED                                                                  01/06/2023 13:47:06 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN .\OUTPUT\led.obj
+COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\LED\led.c BROWSE INCDIR(.\USER;.\BSP\LED;D:\Keil\C51\C51\INC) DEBUG
+                    - OBJECTEXTEND PRINT(.\LISITING\led.lst) TABS(2) OBJECT(.\OUTPUT\led.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          typedef unsigned char u8;
+   4          typedef unsigned int u16;
+   5          
+   6          sbit SRCLK = P3^6;
+   7          sbit rCLK = P3^5;
+   8          sbit SER = P3^4;
+   9          
+  10          /*
+  11          延迟10微秒函数
+  12          输入：需要延迟几个10微秒
+  13          输出：相应的延迟效果
+  14          */
+  15          void delay_10us(u16 ten_us)
+  16          {
+  17   1        while (ten_us--);
+  18   1      }
+  19          
+  20          /*
+  21          延迟毫秒函数
+  22          输入：需要延迟几个毫秒
+  23          输出：相应的延迟效果
+  24          */
+  25          void delay_ms(u16 ms)
+  26          {
+  27   1        u16 i, j;
+  28   1        for (i = 0; i < ms; i++)
+  29   1        {
+  30   2          for (j = 0; j < 110; j++);
+  31   2        }
+  32   1      }
+  33          
+  34          /*
+  35          hc595写入函数
+  36          输入：想要的IO电平对应的十六进制数
+  37          输出：对应的IO电平效果
+  38          */
+  39          void hc595_write_data(u8 dat)
+  40          {
+  41   1        u8 i = 0;
+  42   1        for (i = 0; i < 8; i++)
+  43   1        {
+  44   2          //字节左移七位取最高位
+  45   2          SER = dat >> 7;
+  46   2          //字节右移一位，次高位变最高位
+  47   2          dat <<= 1;
+  48   2          //移位寄存器时钟置低电位
+  49   2          SRCLK = 0;
+  50   2          delay_10us(1);
+  51   2          //给移位寄存器一个上升沿信号
+  52   2          SRCLK = 1;
+  53   2          delay_10us(1);
+  54   2        }
+C51 COMPILER V9.50a   LED                                                                  01/06/2023 13:47:06 PAGE 2   
+
+  55   1        //存储寄存器时钟置低电位
+  56   1        rCLK = 0;
+  57   1        delay_10us(1);
+  58   1        //给存储寄存器一个上升沿信号，将数据输出
+  59   1        rCLK = 1;
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     88    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

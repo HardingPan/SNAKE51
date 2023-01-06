@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "SNAKE51",
+            "includePath": [
+                "D:\\Keil\\C51\\C51\\INC",
+                "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51\\USER",
+                "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51\\BSP\\LED",
+                "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
