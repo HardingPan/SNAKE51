@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 1   
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 02:49:57 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE LCD
@@ -62,7 +62,7 @@ line level    source
   52   1          LCD_WriteCommand(0x38);
   53   1          LCD_WriteCommand(0x0c);
   54   1          LCD_WriteCommand(0x06);
-C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 2   
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 02:49:57 PAGE 2   
 
   55   1          LCD_WriteCommand(0x01);
   56   1          LED_V0 = 0;
@@ -126,7 +126,7 @@ line level    source
  114          
 
 
-C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 3   
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 02:49:57 PAGE 3   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    238    ----

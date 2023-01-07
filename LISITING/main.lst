@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 1   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52          游戏初始化函数
   53          输入：无
   54          输出：速度、蛇身长度、LED点阵等回到初始状态，给蛇一个随机的初始方向
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 2   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 2   
 
   55          */
   56          void snake_init()
@@ -126,7 +126,7 @@ line level    source
  114   2          row(led_row[snake_x[i]]);
  115   2          col(led_col[snake_y[i]]);
  116   2        }
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 3   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 3   
 
  117   1        row(led_row[food_x]);
  118   1        col(led_col[food_y]);
@@ -173,41 +173,39 @@ line level    source
  159   3            led_snake();
  160   3            delay_ms(50 * (11 - speed));
  161   3            re = SBUF;
- 162   3            if (re == 0x04)
+ 162   3            if (re == 0x34)
  163   3            {
  164   4              head_add_x = 0;
  165   4              head_add_y = 1;
  166   4            }
- 167   3            else if (re == 0x03)
+ 167   3            else if (re == 0x33)
  168   3            {
  169   4              head_add_x = 0;
  170   4              head_add_y = -1;
  171   4            }
- 172   3            else if (re == 0x02)
+ 172   3            else if (re == 0x32)
  173   3            {
  174   4              head_add_x = -1;
  175   4              head_add_y = 0;
  176   4            }
- 177   3            else if (re == 0x01)
+ 177   3            else if (re == 0x31)
  178   3            {
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 4   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 4   
 
  179   4              head_add_x = 1;
  180   4              head_add_y = 0;
  181   4            }
  182   3            score = length - 1;
- 183   3            if (score != temp)
- 184   3              uart_send(0x99);
- 185   3              temp = score;
- 186   3          }
- 187   2          length = 1;
- 188   2          
- 189   2        }
- 190   1      }
+ 183   3      
+ 184   3          }
+ 185   2          length = 1;
+ 186   2          
+ 187   2        }
+ 188   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    425    ----
+   CODE SIZE        =    413    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

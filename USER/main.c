@@ -159,27 +159,28 @@ void main()
 			led_snake();
 			delay_ms(50 * (11 - speed));
 			re = SBUF;
-			if (re == 0x04)
+			if (re == 0x34)
 			{
 				head_add_x = 0;
 				head_add_y = 1;
 			}
-			else if (re == 0x03)
+			else if (re == 0x33)
 			{
 				head_add_x = 0;
 				head_add_y = -1;
 			}
-			else if (re == 0x02)
+			else if (re == 0x32)
 			{
 				head_add_x = -1;
 				head_add_y = 0;
 			}
-			else if (re == 0x01)
+			else if (re == 0x31)
 			{
 				head_add_x = 1;
 				head_add_y = 0;
 			}
 			score = length - 1;
+
 		}
 		length = 1;
 		

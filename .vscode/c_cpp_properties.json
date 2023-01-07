@@ -9,8 +9,7 @@
                 "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51\\BSP\\UART",
                 "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51\\BSP\\BUTTON",
                 "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51\\BSP\\LCD",
-                "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51",
-                "D:\\Keil\\C51\\C51\\INC"
+                "c:\\Users\\Administrator\\Desktop\\keshe\\SNAKE51"
             ],
             "defines": [
                 "__C51__",
