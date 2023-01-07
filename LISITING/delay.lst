@@ -1,40 +1,38 @@
-C51 COMPILER V9.50a   DELAY                                                                01/07/2023 20:11:55 PAGE 1   
+C51 COMPILER V9.50a   DELAY                                                                01/07/2023 23:33:03 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE DELAY
 OBJECT MODULE PLACED IN .\OUTPUT\delay.obj
 COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\DELAY\delay.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART
-                    -) DEBUG OBJECTEXTEND PRINT(.\LISITING\delay.lst) TABS(2) OBJECT(.\OUTPUT\delay.obj)
+                    -;.\BSP\BUTTON) DEBUG OBJECTEXTEND PRINT(.\LISITING\delay.lst) TABS(2) OBJECT(.\OUTPUT\delay.obj)
 
 line level    source
 
-   1          #include<stdio.h>
-   2          #include<stdlib.h>
-   3          #include"delay.h"
-   4          
-   5          /*
-   6          延迟10微秒函数
-   7          输入：需要延迟几个10微秒
-   8          输出：相应的延迟效果
-   9          */
-  10          void delay_10us(u16 ten_us)
-  11          {
-  12   1        while (ten_us--);
-  13   1      }
-  14          
-  15          /*
-  16          延迟毫秒函数
-  17          输入：需要延迟几个毫秒
-  18          输出：相应的延迟效果
-  19          */
-  20          void delay_ms(u16 ms)
-  21          {
-  22   1        u16 i, j;
-  23   1        for (i = 0; i < ms; i++)
-  24   1        {
-  25   2          for (j = 0; j < 110; j++);
-  26   2        }
-  27   1      }
+   1          #include"delay.h"
+   2          
+   3          /*
+   4          延迟10微秒函数
+   5          输入：需要延迟几个10微秒
+   6          输出：相应的延迟效果
+   7          */
+   8          void delay_10us(u16 ten_us)
+   9          {
+  10   1        while (ten_us--);
+  11   1      }
+  12          
+  13          /*
+  14          延迟毫秒函数
+  15          输入：需要延迟几个毫秒
+  16          输出：相应的延迟效果
+  17          */
+  18          void delay_ms(u16 ms)
+  19          {
+  20   1        u16 i, j;
+  21   1        for (i = 0; i < ms; i++)
+  22   1        {
+  23   2          for (j = 0; j < 110; j++);
+  24   2        }
+  25   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

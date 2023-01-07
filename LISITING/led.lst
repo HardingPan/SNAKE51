@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   LED                                                                  01/07/2023 20:11:55 PAGE 1   
+C51 COMPILER V9.50a   LED                                                                  01/07/2023 23:33:03 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE LED
 OBJECT MODULE PLACED IN .\OUTPUT\led.obj
-COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\LED\led.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART) DE
-                    -BUG OBJECTEXTEND PRINT(.\LISITING\led.lst) TABS(2) OBJECT(.\OUTPUT\led.obj)
+COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\LED\led.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\B
+                    -SP\BUTTON) DEBUG OBJECTEXTEND PRINT(.\LISITING\led.lst) TABS(2) OBJECT(.\OUTPUT\led.obj)
 
 line level    source
 
@@ -20,7 +20,7 @@ line level    source
   10          输入：想要的IO电平对应的十六进制数
   11          输出：对应的IO电平效果
   12          */
-  13          void row(u8 dat)
+  13          void row (unsigned char dat)
   14          {
   15   1        u8 i = 0;
   16   1        for (i = 0; i < 8; i++)
@@ -48,7 +48,7 @@ line level    source
   38          输入：想要的IO电平对应的十六进制数
   39          输出：对应的IO电平效果
   40          */
-  41          void col(u8 dat)
+  41          void col(unsigned char dat)
   42          {
   43   1        P0 = dat;
   44   1      }
@@ -62,7 +62,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    DATA SIZE        =   ----       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
-C51 COMPILER V9.50a   LED                                                                  01/07/2023 20:11:55 PAGE 2   
+C51 COMPILER V9.50a   LED                                                                  01/07/2023 23:33:03 PAGE 2   
 
 END OF MODULE INFORMATION.
 

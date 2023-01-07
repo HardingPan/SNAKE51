@@ -1,17 +1,51 @@
-C51 COMPILER V9.50a   UART                                                                 01/07/2023 20:11:55 PAGE 1   
+C51 COMPILER V9.50a   UART                                                                 01/07/2023 23:33:03 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN .\OUTPUT\uart.obj
-COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\UART\uart.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART) 
-                    -DEBUG OBJECTEXTEND PRINT(.\LISITING\uart.lst) TABS(2) OBJECT(.\OUTPUT\uart.obj)
+COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\UART\uart.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.
+                    -\BSP\BUTTON) DEBUG OBJECTEXTEND PRINT(.\LISITING\uart.lst) TABS(2) OBJECT(.\OUTPUT\uart.obj)
 
 line level    source
 
+   1          #include<reg51.h>
+   2          #include"delay.h"
+   3          
+   4          
+   5          /*
+   6          串口初始化函数
+   7          输入：设置的波特率
+   8          输出：串口初始化并打开
+   9          */
+  10          void uart_init(unsigned int baud)
+  11          {
+  12   1          //对定时器1进行设置，工作方式2
+  13   1          TMOD |= 0x20;
+  14   1          //对串口寄存器进行设置
+  15   1          SCON = 0x50;
+  16   1          PCON = 0x80;
+  17   1          TH1 = baud;
+  18   1          TL1 = baud;
+  19   1          ES = 1;
+  20   1          EA = 1;
+  21   1          TR1 =1;
+  22   1      
+  23   1      }
+  24          
+  25          void uart_interrupt() interrupt 4
+  26          {
+  27   1          u8 rec;
+  28   1      
+  29   1          RI = 0;
+  30   1          rec = SBUF;
+  31   1          SBUF = rec;
+  32   1          while (!TI);
+  33   1          TI = 0;
+  34   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   ----    ----
+   CODE SIZE        =     43    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

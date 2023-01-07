@@ -10,7 +10,7 @@ hc595写入函数
 输入：想要的IO电平对应的十六进制数
 输出：对应的IO电平效果
 */
-void row(u8 dat)
+void row (unsigned char dat)
 {
 	u8 i = 0;
 	for (i = 0; i < 8; i++)
@@ -38,7 +38,7 @@ P0写入函数
 输入：想要的IO电平对应的十六进制数
 输出：对应的IO电平效果
 */
-void col(u8 dat)
+void col(unsigned char dat)
 {
 	P0 = dat;
 }
