@@ -48,8 +48,8 @@ void snake_init()
 	unsigned char d;
 	length = 1;
 	speed = 1;
-	row(led_row[0]);
-	col(led_col[0]);
+	hc595_write_data(led_row[0]);
+	P0 = led_col[0];
 	
 	d = rand() % 2;
 	switch (d)
