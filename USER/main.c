@@ -144,6 +144,7 @@ void snake_collide()
 
 void main()
 {
+	u8 temp = 0;
 	snake_init();
 	uart_init(0xFA);
 	food();
@@ -178,10 +179,9 @@ void main()
 				head_add_x = 1;
 				head_add_y = 0;
 			}
-
+			score = length - 1;
 		}
-		score = length - 1;
-		length = 1
+		length = 1;
 		
 	}
 }

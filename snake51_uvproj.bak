@@ -47,7 +47,7 @@
           <OutputName>snake51</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\LISITING\</ListingPath>
@@ -297,7 +297,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART</IncludePath>
+              <IncludePath>.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\BSP\BUTTON</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -398,6 +398,16 @@
               <FileName>uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\BSP\UART\uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\BSP\BUTTON\button.c</FilePath>
+            </File>
+            <File>
+              <FileName>button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\BSP\BUTTON\button.h</FilePath>
             </File>
           </Files>
         </Group>

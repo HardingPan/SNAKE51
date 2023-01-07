@@ -1,0 +1,142 @@
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN .\OUTPUT\lcd.obj
+COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\LCD\lcd.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\B
+                    -SP\BUTTON;.\BSP\LCD) DEBUG OBJECTEXTEND PRINT(.\LISITING\lcd.lst) TABS(2) OBJECT(.\OUTPUT\lcd.obj)
+
+line level    source
+
+   1          #include "reg51.h"
+   2          #include "lcd.h"
+   3          #include "intrins.h"
+   4          #include"delay.h"
+   5          
+   6          sbit LCD_RS = P2^5;
+   7          sbit LCD_RW = P2^6;
+   8          sbit LCD_E  = P2^7;
+   9          sbit LED_V0 = P1^0;
+  10          
+  11          #define LCD_DataPort P0
+  12          
+  13          void Delay1ms()   //@11.0592MHz 1ms
+  14          {
+  15   1        unsigned char i, j;
+  16   1      
+  17   1        _nop_();
+  18   1        i = 2;
+  19   1        j = 199;
+  20   1        do
+  21   1        {
+  22   2          while (--j);
+  23   2        } while (--i);
+  24   1      }
+  25          
+  26          void LCD_WriteCommand(unsigned char Command)
+  27          {
+  28   1          LCD_RS = 0;
+  29   1          LCD_RW = 0;
+  30   1          LCD_DataPort = Command;
+  31   1          LCD_E  = 1;
+  32   1          delay_ms(1);
+  33   1          LCD_E  = 0;
+  34   1          delay_ms(1);
+  35   1          
+  36   1      }
+  37          
+  38          void LCD_WriteData(unsigned char Data)
+  39          {
+  40   1          LCD_RS = 1;
+  41   1          LCD_RW = 0;
+  42   1          LCD_DataPort = Data;
+  43   1          LCD_E  = 1;
+  44   1          delay_ms(1);
+  45   1          LCD_E  = 0;
+  46   1          delay_ms(1);
+  47   1          
+  48   1      }
+  49          
+  50          void LCD_Init()
+  51          {
+  52   1          LCD_WriteCommand(0x38);
+  53   1          LCD_WriteCommand(0x0c);
+  54   1          LCD_WriteCommand(0x06);
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 2   
+
+  55   1          LCD_WriteCommand(0x01);
+  56   1          LED_V0 = 0;
+  57   1      }
+  58          
+  59          void LCD_SetCursor(unsigned char Line,unsigned char Columu)
+  60          {
+  61   1        if(Line == 1)
+  62   1        {
+  63   2          LCD_WriteCommand( 0x80 | (Columu-1) );
+  64   2        }
+  65   1        else
+  66   1        {
+  67   2          LCD_WriteCommand( 0x80 | ( Columu-1 )+0x40 );
+  68   2        }
+  69   1      }
+  70          
+  71          void LCD_ShowChar(unsigned char Line , unsigned char Columu , unsigned char Char)
+  72          {
+  73   1          LCD_SetCursor(Line,Columu);
+  74   1        
+  75   1          LCD_WriteData(Char);
+  76   1      }
+  77          
+  78          void LCD_ShowString(unsigned char Line , unsigned char Columu , unsigned char* String)
+  79          {
+  80   1          unsigned char i = 0;
+  81   1        
+  82   1          LCD_SetCursor(Line,Columu);
+  83   1        
+  84   1          for(i=0;String[i] != '\0';i++)
+  85   1          {
+  86   2              LCD_WriteData(String[i]);
+  87   2          }
+  88   1      }
+  89          
+  90          int LCD_Pow(unsigned char x,unsigned char y)
+  91          {
+  92   1          int result = 1;
+  93   1          unsigned char i = 0;
+  94   1          
+  95   1          for(i=0;i<y;i++)
+  96   1          {
+  97   2              result *= x;
+  98   2          }
+  99   1          
+ 100   1          return result;
+ 101   1      }
+ 102          
+ 103          void LCD_ShowNum(unsigned char Line,unsigned char Columu,unsigned int Num,unsigned int Length)
+ 104          {
+ 105   1          unsigned char i = 0;
+ 106   1          
+ 107   1          LCD_SetCursor(Line,Columu);
+ 108   1          
+ 109   1          for(i=Length;i>0;i--)
+ 110   1          {
+ 111   2              LCD_WriteData('0'+Num/LCD_Pow(10,i-1)%10);
+ 112   2          }
+ 113   1      }
+ 114          
+
+
+C51 COMPILER V9.50a   LCD                                                                  01/08/2023 01:59:33 PAGE 3   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    238    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

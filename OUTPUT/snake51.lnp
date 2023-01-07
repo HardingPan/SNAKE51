@@ -3,6 +3,7 @@
 ".\OUTPUT\led.obj",
 ".\OUTPUT\delay.obj",
 ".\OUTPUT\uart.obj",
-".\OUTPUT\button.obj" 
+".\OUTPUT\button.obj",
+".\OUTPUT\lcd.obj" 
 TO ".\OUTPUT\snake51" 
 PRINT(".\LISITING\snake51.m51") RAMSIZE(256) 

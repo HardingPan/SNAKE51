@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   DELAY                                                                01/07/2023 23:33:03 PAGE 1   
+C51 COMPILER V9.50a   DELAY                                                                01/08/2023 01:59:33 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE DELAY
 OBJECT MODULE PLACED IN .\OUTPUT\delay.obj
 COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE BSP\DELAY\delay.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART
-                    -;.\BSP\BUTTON) DEBUG OBJECTEXTEND PRINT(.\LISITING\delay.lst) TABS(2) OBJECT(.\OUTPUT\delay.obj)
+                    -;.\BSP\BUTTON;.\BSP\LCD) DEBUG OBJECTEXTEND PRINT(.\LISITING\delay.lst) TABS(2) OBJECT(.\OUTPUT\delay.obj)
 
 line level    source
 

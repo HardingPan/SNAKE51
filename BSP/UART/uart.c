@@ -32,3 +32,11 @@ void uart_interrupt() interrupt 4
     while (!TI);
     TI = 0;
 }
+
+void uart_send(unsigned char byte)
+{
+    SBUF = byte;
+    while (TI == 0);
+    TI = 0;
+
+}

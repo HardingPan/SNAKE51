@@ -297,7 +297,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\BSP\BUTTON</IncludePath>
+              <IncludePath>.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\BSP\BUTTON;.\BSP\LCD</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -408,6 +408,16 @@
               <FileName>button.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\BSP\BUTTON\button.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\BSP\LCD\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\BSP\LCD\lcd.h</FilePath>
             </File>
           </Files>
         </Group>

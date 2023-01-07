@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   MAIN                                                                 01/07/2023 23:33:03 PAGE 1   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\OUTPUT\main.obj
 COMPILER INVOKED BY: D:\Keil\C51\C51\BIN\C51.EXE USER\main.c BROWSE INCDIR(.\USER;.\BSP\LED;.\BSP\DELAY;.\BSP\UART;.\BSP
-                    -\BUTTON) DEBUG OBJECTEXTEND PRINT(.\LISITING\main.lst) TABS(2) OBJECT(.\OUTPUT\main.obj)
+                    -\BUTTON;.\BSP\LCD) DEBUG OBJECTEXTEND PRINT(.\LISITING\main.lst) TABS(2) OBJECT(.\OUTPUT\main.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          游戏初始化函数
   53          输入：无
   54          输出：速度、蛇身长度、LED点阵等回到初始状态，给蛇一个随机的初始方向
-C51 COMPILER V9.50a   MAIN                                                                 01/07/2023 23:33:03 PAGE 2   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 2   
 
   55          */
   56          void snake_init()
@@ -126,7 +126,7 @@ line level    source
  114   2          row(led_row[snake_x[i]]);
  115   2          col(led_col[snake_y[i]]);
  116   2        }
-C51 COMPILER V9.50a   MAIN                                                                 01/07/2023 23:33:03 PAGE 3   
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 3   
 
  117   1        row(led_row[food_x]);
  118   1        col(led_col[food_y]);
@@ -158,56 +158,60 @@ line level    source
  144          
  145          void main()
  146          {
- 147   1        snake_init();
- 148   1        uart_init(0xFA);
- 149   1        food();
- 150   1        while (1)
- 151   1        {
- 152   2          while (game_flag)
- 153   2          {
- 154   3            led_snake();
- 155   3            snake_move();
- 156   3            led_snake();
- 157   3            snake_collide();
- 158   3            led_snake();
- 159   3            delay_ms(50 * (11 - speed));
- 160   3            re = SBUF;
- 161   3            if (re == 0x04)
- 162   3            {
- 163   4              head_add_x = 0;
- 164   4              head_add_y = 1;
- 165   4            }
- 166   3            else if (re == 0x03)
- 167   3            {
- 168   4              head_add_x = 0;
- 169   4              head_add_y = -1;
- 170   4            }
- 171   3            else if (re == 0x02)
- 172   3            {
- 173   4              head_add_x = -1;
- 174   4              head_add_y = 0;
- 175   4            }
- 176   3            else if (re == 0x01)
- 177   3            {
- 178   4              head_add_x = 1;
-C51 COMPILER V9.50a   MAIN                                                                 01/07/2023 23:33:03 PAGE 4   
+ 147   1        u8 temp = 0;
+ 148   1        snake_init();
+ 149   1        uart_init(0xFA);
+ 150   1        food();
+ 151   1        while (1)
+ 152   1        {
+ 153   2          while (game_flag)
+ 154   2          {
+ 155   3            led_snake();
+ 156   3            snake_move();
+ 157   3            led_snake();
+ 158   3            snake_collide();
+ 159   3            led_snake();
+ 160   3            delay_ms(50 * (11 - speed));
+ 161   3            re = SBUF;
+ 162   3            if (re == 0x04)
+ 163   3            {
+ 164   4              head_add_x = 0;
+ 165   4              head_add_y = 1;
+ 166   4            }
+ 167   3            else if (re == 0x03)
+ 168   3            {
+ 169   4              head_add_x = 0;
+ 170   4              head_add_y = -1;
+ 171   4            }
+ 172   3            else if (re == 0x02)
+ 173   3            {
+ 174   4              head_add_x = -1;
+ 175   4              head_add_y = 0;
+ 176   4            }
+ 177   3            else if (re == 0x01)
+ 178   3            {
+C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 01:59:32 PAGE 4   
 
- 179   4              head_add_y = 0;
- 180   4            }
- 181   3      
- 182   3          }
- 183   2          score = length - 1;
- 184   2          
- 185   2        }
- 186   1      }
+ 179   4              head_add_x = 1;
+ 180   4              head_add_y = 0;
+ 181   4            }
+ 182   3            score = length - 1;
+ 183   3            if (score != temp)
+ 184   3              uart_send(0x99);
+ 185   3              temp = score;
+ 186   3          }
+ 187   2          length = 1;
+ 188   2          
+ 189   2        }
+ 190   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    407    ----
+   CODE SIZE        =    425    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     65       2
+   DATA SIZE        =     65       3
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
