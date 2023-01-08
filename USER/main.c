@@ -4,7 +4,7 @@
 #include"led.h"
 #include"delay.h"
 #include"uart.h"
-#include"button.h"
+#include"lcd.h"
 
 //这是head的移动量，值为-1，0，1
 char head_add_x, head_add_y;
@@ -16,8 +16,8 @@ u8 speed;
 //存储果实的横纵坐标
 u8 food_x, food_y;
 //分别存储蛇身的横坐标、总坐标
-char snake_x[20] = {0};
-char snake_y[20] = {0};
+char snake_x[10] = {0};
+char snake_y[10] = {0};
 
 //记录游戏是否结束
 u8 game_flag;
@@ -58,6 +58,7 @@ void snake_init()
 	unsigned char d;
 	length = 1;
 	speed = 1;
+	score = 0;
 	game_flag = 1;
 	row(led_row[0]);
 	col(led_col[0]);
@@ -145,11 +146,15 @@ void snake_collide()
 void main()
 {
 	u8 temp = 0;
+	char s[6] = "GAMING";
+	LCD_Init();
 	snake_init();
 	uart_init(0xFA);
 	food();
 	while (1)
 	{
+		LCD_Init();
+		LCD_ShowString(1, 1, s);
 		while (game_flag)
 		{
 			led_snake();
@@ -183,6 +188,7 @@ void main()
 
 		}
 		length = 1;
-		
+		LCD_Init();
 	}
+	
 }

@@ -19,24 +19,31 @@ void uart_init(unsigned int baud)
     ES = 1;
     EA = 1;
     TR1 =1;
-
 }
 
+/*
+串口中断函数
+输入：串口输入（有中断）
+输出：串口输入信息（读取SBUF）
+*/
 void uart_interrupt() interrupt 4
 {
     u8 rec;
 
     RI = 0;
     rec = SBUF;
-    SBUF = rec;
     while (!TI);
     TI = 0;
 }
 
+/*
+串口发送函数
+输入：需要发送的字节
+输出：串口输出
+*/
 void uart_send(unsigned char byte)
 {
     SBUF = byte;
-    while (TI == 0);
+    while (!TI);
     TI = 0;
-
 }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 1   
+C51 COMPILER V9.50a   MAIN                                                                 01/09/2023 02:15:48 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE MAIN
@@ -14,7 +14,7 @@ line level    source
    4          #include"led.h"
    5          #include"delay.h"
    6          #include"uart.h"
-   7          #include"button.h"
+   7          #include"lcd.h"
    8          
    9          //这是head的移动量，值为-1，0，1
   10          char head_add_x, head_add_y;
@@ -26,8 +26,8 @@ line level    source
   16          //存储果实的横纵坐标
   17          u8 food_x, food_y;
   18          //分别存储蛇身的横坐标、总坐标
-  19          char snake_x[20] = {0};
-  20          char snake_y[20] = {0};
+  19          char snake_x[10] = {0};
+  20          char snake_y[10] = {0};
   21          
   22          //记录游戏是否结束
   23          u8 game_flag;
@@ -62,7 +62,7 @@ line level    source
   52          游戏初始化函数
   53          输入：无
   54          输出：速度、蛇身长度、LED点阵等回到初始状态，给蛇一个随机的初始方向
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 2   
+C51 COMPILER V9.50a   MAIN                                                                 01/09/2023 02:15:48 PAGE 2   
 
   55          */
   56          void snake_init()
@@ -70,146 +70,152 @@ line level    source
   58   1        unsigned char d;
   59   1        length = 1;
   60   1        speed = 1;
-  61   1        game_flag = 1;
-  62   1        row(led_row[0]);
-  63   1        col(led_col[0]);
-  64   1        
-  65   1        d = rand() % 2;
-  66   1        switch (d)
-  67   1        {
-  68   2        case 0:
-  69   2          head_add_x = 1;
-  70   2          head_add_y = 0;
-  71   2          break;
-  72   2        case 1:
-  73   2          head_add_x = 0;
-  74   2          head_add_y = 1;
-  75   2          break;
-  76   2        }
-  77   1      }
-  78          
-  79          /*
-  80          随机生成果实函数
-  81          输入：无
-  82          输出：生成一个随机位置的果实
-  83          */
-  84          void food()
-  85          {
-  86   1        u8 flag = 0;
-  87   1        u8 i;
-  88   1        while (!flag)
-  89   1        {
-  90   2          food_x = rand() % 8;
-  91   2          food_y = rand() % 8;
-  92   2          flag = 1;
-  93   2          
-  94   2          for (i = 0; i < length; i++)
-  95   2          {
-  96   3            if (snake_x[i] == food_x && snake_y[i] == food_y)
-  97   3            {
-  98   4              flag = 0;
-  99   4              break;
- 100   4            }
- 101   3          }
- 102   2        }
- 103   1      }
- 104          
- 105          /*
- 106          显示蛇身函数
- 107          */
- 108          void led_snake()
- 109          {
- 110   1        u8 i;
- 111   1      
- 112   1        for (i = 0; i < length; i++)
- 113   1        {
- 114   2          row(led_row[snake_x[i]]);
- 115   2          col(led_col[snake_y[i]]);
- 116   2        }
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 3   
+  61   1        score = 0;
+  62   1        game_flag = 1;
+  63   1        row(led_row[0]);
+  64   1        col(led_col[0]);
+  65   1        
+  66   1        d = rand() % 2;
+  67   1        switch (d)
+  68   1        {
+  69   2        case 0:
+  70   2          head_add_x = 1;
+  71   2          head_add_y = 0;
+  72   2          break;
+  73   2        case 1:
+  74   2          head_add_x = 0;
+  75   2          head_add_y = 1;
+  76   2          break;
+  77   2        }
+  78   1      }
+  79          
+  80          /*
+  81          随机生成果实函数
+  82          输入：无
+  83          输出：生成一个随机位置的果实
+  84          */
+  85          void food()
+  86          {
+  87   1        u8 flag = 0;
+  88   1        u8 i;
+  89   1        while (!flag)
+  90   1        {
+  91   2          food_x = rand() % 8;
+  92   2          food_y = rand() % 8;
+  93   2          flag = 1;
+  94   2          
+  95   2          for (i = 0; i < length; i++)
+  96   2          {
+  97   3            if (snake_x[i] == food_x && snake_y[i] == food_y)
+  98   3            {
+  99   4              flag = 0;
+ 100   4              break;
+ 101   4            }
+ 102   3          }
+ 103   2        }
+ 104   1      }
+ 105          
+ 106          /*
+ 107          显示蛇身函数
+ 108          */
+ 109          void led_snake()
+ 110          {
+ 111   1        u8 i;
+ 112   1      
+ 113   1        for (i = 0; i < length; i++)
+ 114   1        {
+ 115   2          row(led_row[snake_x[i]]);
+ 116   2          col(led_col[snake_y[i]]);
+C51 COMPILER V9.50a   MAIN                                                                 01/09/2023 02:15:48 PAGE 3   
 
- 117   1        row(led_row[food_x]);
- 118   1        col(led_col[food_y]);
- 119   1      
- 120   1      }
- 121          
+ 117   2        }
+ 118   1        row(led_row[food_x]);
+ 119   1        col(led_col[food_y]);
+ 120   1      
+ 121   1      }
  122          
- 123          /*
- 124          判断是否碰撞函数
- 125          */
- 126          void snake_collide()
- 127          {
- 128   1        u8 i;
- 129   1        for (i = 1; i < length; i++)
- 130   1        {
- 131   2          if (snake_x[0] == snake_x[i] && snake_y[0] ==snake_y[i])
- 132   2          {
- 133   3            game_flag = 0;
- 134   3          }
- 135   2        }
- 136   1        if (snake_x[0] == food_x && snake_y[0] == food_y)
- 137   1        {
- 138   2          length++;
- 139   2          food();
- 140   2        }
- 141   1      }
- 142          
+ 123          
+ 124          /*
+ 125          判断是否碰撞函数
+ 126          */
+ 127          void snake_collide()
+ 128          {
+ 129   1        u8 i;
+ 130   1        for (i = 1; i < length; i++)
+ 131   1        {
+ 132   2          if (snake_x[0] == snake_x[i] && snake_y[0] ==snake_y[i])
+ 133   2          {
+ 134   3            game_flag = 0;
+ 135   3          }
+ 136   2        }
+ 137   1        if (snake_x[0] == food_x && snake_y[0] == food_y)
+ 138   1        {
+ 139   2          length++;
+ 140   2          food();
+ 141   2        }
+ 142   1      }
  143          
  144          
- 145          void main()
- 146          {
- 147   1        u8 temp = 0;
- 148   1        snake_init();
- 149   1        uart_init(0xFA);
- 150   1        food();
- 151   1        while (1)
- 152   1        {
- 153   2          while (game_flag)
- 154   2          {
- 155   3            led_snake();
- 156   3            snake_move();
- 157   3            led_snake();
- 158   3            snake_collide();
- 159   3            led_snake();
- 160   3            delay_ms(50 * (11 - speed));
- 161   3            re = SBUF;
- 162   3            if (re == 0x34)
- 163   3            {
- 164   4              head_add_x = 0;
- 165   4              head_add_y = 1;
- 166   4            }
- 167   3            else if (re == 0x33)
+ 145          
+ 146          void main()
+ 147          {
+ 148   1        u8 temp = 0;
+ 149   1        char s[6] = "GAMING";
+ 150   1        LCD_Init();
+ 151   1        snake_init();
+ 152   1        uart_init(0xFA);
+ 153   1        food();
+ 154   1        while (1)
+ 155   1        {
+ 156   2          LCD_Init();
+ 157   2          LCD_ShowString(1, 1, s);
+ 158   2          while (game_flag)
+ 159   2          {
+ 160   3            led_snake();
+ 161   3            snake_move();
+ 162   3            led_snake();
+ 163   3            snake_collide();
+ 164   3            led_snake();
+ 165   3            delay_ms(50 * (11 - speed));
+ 166   3            re = SBUF;
+ 167   3            if (re == 0x34)
  168   3            {
  169   4              head_add_x = 0;
- 170   4              head_add_y = -1;
+ 170   4              head_add_y = 1;
  171   4            }
- 172   3            else if (re == 0x32)
+ 172   3            else if (re == 0x33)
  173   3            {
- 174   4              head_add_x = -1;
- 175   4              head_add_y = 0;
+ 174   4              head_add_x = 0;
+ 175   4              head_add_y = -1;
  176   4            }
- 177   3            else if (re == 0x31)
+ 177   3            else if (re == 0x32)
  178   3            {
-C51 COMPILER V9.50a   MAIN                                                                 01/08/2023 02:49:57 PAGE 4   
+C51 COMPILER V9.50a   MAIN                                                                 01/09/2023 02:15:48 PAGE 4   
 
- 179   4              head_add_x = 1;
+ 179   4              head_add_x = -1;
  180   4              head_add_y = 0;
  181   4            }
- 182   3            score = length - 1;
- 183   3      
- 184   3          }
- 185   2          length = 1;
- 186   2          
- 187   2        }
- 188   1      }
+ 182   3            else if (re == 0x31)
+ 183   3            {
+ 184   4              head_add_x = 1;
+ 185   4              head_add_y = 0;
+ 186   4            }
+ 187   3            score = length - 1;
+ 188   3      
+ 189   3          }
+ 190   2          length = 1;
+ 191   2          LCD_Init();
+ 192   2        }
+ 193   1        
+ 194   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    413    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    455    ----
+   CONSTANT SIZE    =      6    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     65       3
+   DATA SIZE        =     45       9
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

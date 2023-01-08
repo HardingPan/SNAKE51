@@ -10,6 +10,7 @@
 char head_add_x, head_add_y;
 //定义蛇的长度length,length-1也就是分数score
 u8 length;
+u8 score;
 //游戏初始速度为1，速度为1-8档
 u8 speed;
 //存储果实的横纵坐标
@@ -18,17 +19,16 @@ u8 food_x, food_y;
 char snake_x[20] = {0};
 char snake_y[20] = {0};
 
-//储存按钮值
-u8 key_num;
-
 //记录游戏是否结束
 u8 game_flag;
-u8 begin_flag;
-
 
 //LED点阵横坐标、纵坐标的亮灭控制，从左下角开始为第一个
 u8 led_row[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 u8 led_col[8] = {0x7f, 0xbf, 0xdf, 0xef, 0xf7, 0xfb, 0xfd, 0xfe};
+
+
+//串口接收到的值
+u8 re;
 
 /*
 贪吃蛇移动函数
@@ -59,8 +59,6 @@ void snake_init()
 	length = 1;
 	speed = 1;
 	game_flag = 1;
-	begin_flag = 0;
-	key_num = 0;
 	row(led_row[0]);
 	col(led_col[0]);
 	
@@ -118,57 +116,73 @@ void led_snake()
 	}
 	row(led_row[food_x]);
 	col(led_col[food_y]);
-	snake_move();
-	delay_ms(20 * (10 - speed));
+
 }
 
 
+/*
+判断是否碰撞函数
+*/
+void snake_collide()
+{
+	u8 i;
+	for (i = 1; i < length; i++)
+	{
+		if (snake_x[0] == snake_x[i] && snake_y[0] ==snake_y[i])
+		{
+			game_flag = 0;
+		}
+	}
+	if (snake_x[0] == food_x && snake_y[0] == food_y)
+	{
+		length++;
+		food();
+	}
+}
 
 
 
 void main()
 {
-	//初始化
-	//对游戏进行初始化
+	u8 temp = 0;
 	snake_init();
-	//对串口进行初始化，通信的波特率设置为9600
 	uart_init(0xFA);
-	//生成第一个果实
 	food();
-	//初始化完毕
-
-	//游戏还没输,此时game_flag为1（初始化里设置的）
-	while (game_flag)
+	while (1)
 	{
-		key(key_num);
-		if (key_num == 1)
+		while (game_flag)
 		{
-			begin_flag = 1;
-		}
-		//玩家确认开始按钮
-		while (begin_flag)
-		{
-			key(key_num);
-			if (key_num == 2)
-				//增加速度
-				speed = (speed + 1) % 8;
-			//按了game over按钮，游戏直接结束
-			else if (key_num == 4)
+			led_snake();
+			snake_move();
+			led_snake();
+			snake_collide();
+			led_snake();
+			delay_ms(50 * (11 - speed));
+			re = SBUF;
+			if (re == 0x34)
 			{
-				game_flag = 0;
+				head_add_x = 0;
+				head_add_y = 1;
 			}
-			//正式开始游戏
-			else if (key_num == 3)
+			else if (re == 0x33)
 			{
-				begin_flag = 2;
+				head_add_x = 0;
+				head_add_y = -1;
 			}
-			while (begin_flag == 2)
+			else if (re == 0x32)
 			{
-				led_snake();
+				head_add_x = -1;
+				head_add_y = 0;
 			}
-			
+			else if (re == 0x31)
+			{
+				head_add_x = 1;
+				head_add_y = 0;
+			}
+			score = length - 1;
 
 		}
+		length = 1;
 		
 	}
 }
